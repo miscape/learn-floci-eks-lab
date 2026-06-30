@@ -42,4 +42,4 @@ Il supporto EKS di Floci usa k3s in modalità real mode. Le vere EKS access entr
 - [x] Monitor stack creation
 - [x] Creazione cluster EKS-like
 - [x] Accesso con kubectl
-- [ ] RBAC Kubernetes al posto di IAM access entry
+- [x] RBAC Kubernetes al posto di IAM access entry

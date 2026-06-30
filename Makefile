@@ -1,4 +1,4 @@
-.PHONY: help check up down logs ps env aws-test smoke clean ec2-key ec2-run ec2-list cfn-validate cfn-create cfn-status cfn-events cfn-resources cfn-delete eks-describe eks-kubeconfig k8s-nodes
+.PHONY: help check up down logs ps env aws-test smoke clean ec2-key ec2-run ec2-list cfn-validate cfn-create cfn-status cfn-events cfn-resources cfn-delete eks-describe eks-kubeconfig k8s-nodes rbac-apply rbac-kubeconfig rbac-test rbac-clean
 
 help:
 	@echo "Available targets:"
@@ -102,6 +102,19 @@ eks-kubeconfig:
 
 k8s-nodes:
 	source scripts/env.sh >/dev/null && kubectl get nodes -o wide
+
+rbac-apply:
+	kubectl apply -f k8s/rbac/dev-team-rbac.yaml
+
+rbac-kubeconfig:
+	./scripts/create-dev-kubeconfig.sh
+
+rbac-test:
+	./scripts/rbac-test.sh
+
+rbac-clean:
+	kubectl delete namespace dev-team --ignore-not-found=true
+	rm -f .kube/devops-user.kubeconfig
 
 clean:
 	docker compose down -v
