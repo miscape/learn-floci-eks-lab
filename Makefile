@@ -1,4 +1,4 @@
-.PHONY: help check up down logs ps env aws-test smoke clean ec2-key ec2-run ec2-list cfn-validate cfn-create cfn-status cfn-events cfn-resources cfn-delete eks-describe eks-kubeconfig k8s-nodes rbac-apply rbac-kubeconfig rbac-test rbac-clean
+.PHONY: help check up down logs ps env aws-test smoke clean ec2-key ec2-run ec2-list cfn-validate cfn-create cfn-status cfn-events cfn-resources cfn-delete eks-describe eks-kubeconfig k8s-nodes rbac-apply rbac-kubeconfig rbac-test rbac-clean cleanup reset
 
 help:
 	@echo "Available targets:"
@@ -101,7 +101,7 @@ eks-kubeconfig:
 		--alias floci-eks-lab
 
 k8s-nodes:
-	source scripts/env.sh >/dev/null && kubectl get nodes -o wide
+	. ./scripts/env.sh >/dev/null && kubectl get nodes -o wide
 
 rbac-apply:
 	kubectl apply -f k8s/rbac/dev-team-rbac.yaml
@@ -118,4 +118,11 @@ rbac-clean:
 
 clean:
 	docker compose down -v
+	rm -rf data
+
+cleanup:
+	./scripts/cleanup-lab.sh
+
+reset:
+	./scripts/cleanup-lab.sh
 	rm -rf data

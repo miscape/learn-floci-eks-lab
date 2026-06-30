@@ -27,7 +27,7 @@ Questo progetto replica, in locale, i concetti di un laboratorio AWS basato su:
 
 Floci emula servizi AWS localmente su `http://localhost:4566`.
 
-Il supporto EKS di Floci usa k3s in modalità real mode. Le vere EKS access entries e access policies non sono ancora supportate; nel laboratorio verranno sostituite con autenticazione EKS-like e RBAC Kubernetes.
+Il supporto EKS di Floci usa k3s in modalità real mode. Le vere EKS access entries e access policies non sono ancora supportate; nel laboratorio le ho sostituite con autenticazione EKS-like e RBAC Kubernetes.
 
 ## Stato laboratorio
 
