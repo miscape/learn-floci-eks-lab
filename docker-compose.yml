@@ -1,0 +1,24 @@
+services:
+  floci:
+    image: floci/floci:latest
+    container_name: floci
+    ports:
+      - "4566:4566"
+    volumes:
+      - ./data:/app/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      FLOCI_BASE_URL: "http://localhost:4566"
+      FLOCI_DEFAULT_REGION: "us-east-1"
+      FLOCI_DEFAULT_ACCOUNT_ID: "000000000000"
+      FLOCI_SERVICES_EKS_ENABLED: "true"
+      FLOCI_SERVICES_EKS_MOCK: "false"
+      FLOCI_SERVICES_EKS_DOCKER_NETWORK: "learn-floci-eks-lab-net"
+      FLOCI_SERVICES_EKS_ENDPOINT_MODE: "host"
+      FLOCI_SERVICES_EKS_IAM_AUTH_WEBHOOK: "true"
+    networks:
+      - floci-net
+
+networks:
+  floci-net:
+    name: learn-floci-eks-lab-net

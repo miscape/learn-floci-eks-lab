@@ -1,0 +1,22 @@
+# Floci local data
+data/
+
+# Kubernetes local configs
+.kube/
+*.kubeconfig
+
+# AWS local/cache/config artifacts
+.aws/
+awscliv2.zip
+
+# Logs
+*.log
+
+# OS/editor
+.DS_Store
+.vscode/
+.idea/
+
+# Temp
+tmp/
+*.tmp
