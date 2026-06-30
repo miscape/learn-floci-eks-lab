@@ -20,3 +20,6 @@ awscliv2.zip
 # Temp
 tmp/
 *.tmp
+
+# Local SSH keys for lab
+ssh/

@@ -1,4 +1,4 @@
-.PHONY: help check up down logs ps env aws-test smoke clean ec2-key ec2-run ec2-list
+.PHONY: help check up down logs ps env aws-test smoke clean ec2-key ec2-run ec2-list cfn-validate cfn-create cfn-status cfn-events cfn-resources cfn-delete eks-describe eks-kubeconfig k8s-nodes
 
 help:
 	@echo "Available targets:"
@@ -55,6 +55,53 @@ ec2-list:
 	./scripts/aws-local.sh ec2 describe-instances \
 		--query "Reservations[].Instances[].{InstanceId:InstanceId,State:State.Name,ImageId:ImageId,PublicIp:PublicIpAddress,PrivateIp:PrivateIpAddress}" \
 		--output table
+
+cfn-validate:
+	./scripts/aws-local.sh cloudformation validate-template \
+		--template-body file://cloudformation/eks-cluster.yaml
+
+cfn-create:
+	./scripts/aws-local.sh cloudformation create-stack \
+		--stack-name floci-eks-lab-stack \
+		--template-body file://cloudformation/eks-cluster.yaml \
+		--capabilities CAPABILITY_NAMED_IAM
+
+cfn-status:
+	./scripts/aws-local.sh cloudformation describe-stacks \
+		--stack-name floci-eks-lab-stack \
+		--query "Stacks[].{StackName:StackName,Status:StackStatus,CreationTime:CreationTime,Outputs:Outputs}" \
+		--output table
+
+cfn-events:
+	./scripts/aws-local.sh cloudformation describe-stack-events \
+		--stack-name floci-eks-lab-stack \
+		--query "StackEvents[].{Time:Timestamp,LogicalId:LogicalResourceId,Type:ResourceType,Status:ResourceStatus,Reason:ResourceStatusReason}" \
+		--output table
+
+cfn-resources:
+	./scripts/aws-local.sh cloudformation describe-stack-resources \
+		--stack-name floci-eks-lab-stack \
+		--query "StackResources[].{LogicalId:LogicalResourceId,Type:ResourceType,PhysicalId:PhysicalResourceId,Status:ResourceStatus}" \
+		--output table
+
+cfn-delete:
+	./scripts/aws-local.sh cloudformation delete-stack \
+		--stack-name floci-eks-lab-stack
+
+eks-describe:
+	./scripts/aws-local.sh eks describe-cluster \
+		--name floci-eks-lab \
+		--query "cluster.{Name:name,Status:status,Endpoint:endpoint,Arn:arn,Version:version}" \
+		--output table
+
+eks-kubeconfig:
+	./scripts/aws-local.sh eks update-kubeconfig \
+		--name floci-eks-lab \
+		--region us-east-1 \
+		--alias floci-eks-lab
+
+k8s-nodes:
+	source scripts/env.sh >/dev/null && kubectl get nodes -o wide
 
 clean:
 	docker compose down -v

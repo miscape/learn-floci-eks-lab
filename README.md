@@ -31,11 +31,15 @@ Il supporto EKS di Floci usa k3s in modalità real mode. Le vere EKS access entr
 
 ## Stato laboratorio
 
-- [ ] Setup repository
-- [ ] Avvio Floci
-- [ ] Configurazione AWS CLI locale
-- [ ] Creazione risorse via CloudFormation
-- [ ] Creazione cluster EKS-like
-- [ ] Accesso con kubectl
-- [ ] RBAC Kubernetes
+## Stato laboratorio
 
+- [x] Setup repository
+- [x] Avvio Floci
+- [x] Configurazione AWS CLI locale
+- [x] EC2-like instance locale
+- [x] Connessione SSH alla EC2-like instance
+- [x] CloudFormation template
+- [x] Monitor stack creation
+- [x] Creazione cluster EKS-like
+- [x] Accesso con kubectl
+- [ ] RBAC Kubernetes al posto di IAM access entry
