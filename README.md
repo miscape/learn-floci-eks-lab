@@ -1,5 +1,5 @@
 # learn-floci-eks-lab
-
+![alt text](img/image.png)
 Laboratorio DevOps locale per simulare un workflow AWS/EKS senza account AWS e senza costi.
 
 ## Obiettivo
@@ -43,3 +43,7 @@ Il supporto EKS di Floci usa k3s in modalità real mode. Le vere EKS access entr
 - [x] Creazione cluster EKS-like
 - [x] Accesso con kubectl
 - [x] RBAC Kubernetes al posto di IAM access entry
+
+![alt text](img/image-1.png)
+
+![alt text](img/image-4.png)
